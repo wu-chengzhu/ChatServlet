@@ -67,9 +67,6 @@ public class MessageServlet extends HttpServlet {
         }
         finally {
             try {
-
-
-
                 if(connection!=null)
                     connection.close();//关闭数据库连接
             } catch (SQLException e) {

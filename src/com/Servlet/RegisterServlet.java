@@ -49,7 +49,7 @@ public class RegisterServlet extends HttpServlet {
                 isuser=true;//是用户
             }
             if(isuser==true){//已经有这个用户
-                json=gson.toJson(false,Boolean.class);//通过gson把数据转成json格式 传给它错
+                json=gson.toJson(false);//通过gson把数据转成json格式 传给它错
             }
             else{ //不然就把这个用户的数据插入进去
                 sql=connection.prepareStatement("INSERT INTO user (username,password) VALUES (?, ?)");
@@ -57,7 +57,7 @@ public class RegisterServlet extends HttpServlet {
                 sql.setString(1,username);
                 sql.setString(2,password);
                 sql.executeUpdate();//执行更新
-                json=gson.toJson(true,Boolean.class);//把数据转成json格式
+                json=gson.toJson(true);//把数据转成json格式
                 sql.close();
             }
          // Boolean isregister=false;
