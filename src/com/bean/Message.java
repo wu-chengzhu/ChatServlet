@@ -5,6 +5,16 @@ import java.io.Serializable;
 public class Message implements Serializable {
     private  int sender;
     private  int receiver;
+    private String sendName;
+
+    public String getSendName() {
+        return sendName;
+    }
+
+    public void setSendName(String sendName) {
+        this.sendName = sendName;
+    }
+
     private String msg;
 
 

@@ -56,7 +56,7 @@ public class MessageServlet extends HttpServlet {
             preparedStatement.setString(3,msg);
             preparedStatement.executeUpdate();//执行插入操作
             System.out.println("插入成功");
-
+              out.println(true);
             preparedStatement.close();//关闭这个对象
         }
         catch (NumberFormatException e) {
@@ -64,6 +64,7 @@ public class MessageServlet extends HttpServlet {
         }
         catch (Exception e) {
             e.printStackTrace();
+            out.println(false);
         }
         finally {
             try {
@@ -93,14 +94,21 @@ public class MessageServlet extends HttpServlet {
                     // System.out.println("有显示吗");
                     cmsg = new Message();//初使化一个Message对象 ，用来存拿出来的结果
                     try {
-                        cmsg.setSender(Integer.parseInt(resultSet.getString("sender")));
-                        ;//得到发送者是谁
+                        cmsg.setSender(Integer.parseInt(resultSet.getString("sender")));//得到发送者是谁
                     } catch (NumberFormatException e) //防止id出错
                     {
                         e.printStackTrace();
                     }
+                    sql="select * from user where id=?";
+                    preparedStatement=connection.prepareStatement(sql);//准备执行这个数据库语句
+                    preparedStatement.setInt(1,cmsg.getSender());//设置参数
+                   ResultSet senderResult=preparedStatement.executeQuery(); //执行查询语句并拿到结果的对象
+                   senderResult.next();
+                   cmsg.setSendName(senderResult.getString("username"));
+
                     cmsg.setMsg(resultSet.getString("msg"));//得到消息
                     msgList.add(cmsg);//把这一个消息加入list中
+                    System.out.println("消息："+cmsg.toString());
                 }
                 gson = new GsonBuilder().create();//创造一个Gson对象
                 String json = gson.toJson(msgList);//通过gson把数据转成json格式
