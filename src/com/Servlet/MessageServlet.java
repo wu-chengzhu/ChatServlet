@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 处理消息接收和发送的servlet
+ */
 @WebServlet(name = "MessageServlet")
 public class MessageServlet extends HttpServlet {
     private Gson gson;//gson 对象用来序列化，反序列化json
@@ -30,7 +33,6 @@ public class MessageServlet extends HttpServlet {
                response.setContentType("application/json; charset=utf-8");
                 String selfId= request.getParameter("selfId");//这个参数用来看自己有没有消息
                  System.out.println("selfid:"+selfId+"|");
-
                 //这几个参数用来发送消息
                 String sender=request.getParameter("sender");
                 String receiver=  request.getParameter("receiver");
@@ -91,7 +93,6 @@ public class MessageServlet extends HttpServlet {
                 resultSet = preparedStatement.executeQuery();//执行查询语句并拿到结果的对象
                 while (resultSet.next())//看结果集里有结果吗
                 {
-                    // System.out.println("有显示吗");
                     cmsg = new Message();//初使化一个Message对象 ，用来存拿出来的结果
                     try {
                         cmsg.setSender(Integer.parseInt(resultSet.getString("sender")));//得到发送者是谁
@@ -105,7 +106,6 @@ public class MessageServlet extends HttpServlet {
                    ResultSet senderResult=preparedStatement.executeQuery(); //执行查询语句并拿到结果的对象
                    senderResult.next();
                    cmsg.setSendName(senderResult.getString("username"));
-
                     cmsg.setMsg(resultSet.getString("msg"));//得到消息
                     msgList.add(cmsg);//把这一个消息加入list中
                     System.out.println("消息："+cmsg.toString());

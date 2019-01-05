@@ -2,6 +2,9 @@ package com.bean;
 
 import java.io.Serializable;
 
+/**
+ * 消息实体类
+ */
 public class Message implements Serializable {
     private  int sender;
     private  int receiver;

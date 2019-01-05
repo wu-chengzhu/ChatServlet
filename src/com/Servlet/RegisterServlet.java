@@ -20,13 +20,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Map;
 
+/**
+ * 处理注册的servlet
+ */
 @WebServlet(name = "RegisterServlet")
 public class RegisterServlet extends HttpServlet {
     private PreparedStatement sql;//准备执行SQL语句对象
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
 
         response.setContentType("application/json; charset=utf-8");//设置响应类型和字符集
         request.setCharacterEncoding("utf-8");//设置请求的字符集
@@ -52,15 +53,14 @@ public class RegisterServlet extends HttpServlet {
                 json=gson.toJson(false);//通过gson把数据转成json格式 传给它错
             }
             else{ //不然就把这个用户的数据插入进去
-                sql=connection.prepareStatement("INSERT INTO user (username,password) VALUES (?, ?)");
+                sql=connection.prepareStatement("INSERT INTO user ('',password) VALUES (?, ?)");//sql查询语句
               //  sql.setInt(1,i++);
-                sql.setString(1,username);
-                sql.setString(2,password);
+                sql.setString(1,username);//设置第一个参数为传回来的username
+                sql.setString(2,password);//设置第二个参数为传回来的password
                 sql.executeUpdate();//执行更新
                 json=gson.toJson(true);//把数据转成json格式
                 sql.close();
             }
-         // Boolean isregister=false;
             writer.println(json);//把数据传给客户端
             isuser=false;
             //把这些都close掉

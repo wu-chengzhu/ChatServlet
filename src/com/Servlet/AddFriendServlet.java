@@ -16,6 +16,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * 处理添加朋友的servlet
+ */
 @WebServlet(name = "AddFriendServlet")
 public class AddFriendServlet extends HttpServlet {
     private Gson gson;//gson 对象用来序列化，反序列化json
